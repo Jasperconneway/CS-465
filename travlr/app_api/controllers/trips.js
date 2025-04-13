@@ -91,8 +91,8 @@ const tripsAddTrip = async(req, res) => {
 // and JSON message to the requesting client  
 const tripsUpdateTrip = async(req, res) => {  
     // Uncomment for debugging  
-    // console.log(req.params);  
-    // console.log(req.body);  
+    console.log(req.params);  
+    console.log(req.body);  
      
     const q = await Model  
         .findOneAndUpdate(
