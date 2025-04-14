@@ -34,6 +34,7 @@ export class AddTripComponent implements OnInit {
       description: ['', Validators.required]
     })
   }
+  
 
   public onSubmit() {
     this.submitted = true;
