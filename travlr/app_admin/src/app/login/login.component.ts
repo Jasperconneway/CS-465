@@ -33,8 +33,7 @@ export class LoginComponent implements OnInit {
   
   public onLoginSubmit(): void { 
     this.formError = ''; 
-    if (!this.credentials.email || !this.credentials.password ||
-      !this.credentials.name) { 
+    if (!this.credentials.email || !this.credentials.password) { 
       this.formError = 'All fields are required, please try again';
       this.router.navigateByUrl('#'); // Return to login page 
     } else { 
@@ -43,14 +42,10 @@ export class LoginComponent implements OnInit {
   }
   
   private doLogin(): void {
-    let newUser = {
-      name: this.credentials.name,
-      email: this.credentials.email
-    } as User;
 
     // console.log('LoginComponent::doLogin');
     // console.log(this.credentials);
-    this.authenticationService.login(newUser, this.credentials.password);
+    this.authenticationService.login(this.credentials);
 
     if(this.authenticationService.isLoggedIn())
     {

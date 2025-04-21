@@ -15,8 +15,8 @@ export class AuthenticationService {
     private tripDataService: TripDataService
   ) {}
 
-  public getToken(): string{
-    let token: string = this.storage.getItem('travlr-token') as string;
+  public getToken(): string {
+    let token = this.storage.getItem('travlr-token') as string;
     return token;
   }
 
@@ -24,15 +24,14 @@ export class AuthenticationService {
     this.storage.setItem('travlr-token', token);
   }
 
-  public login(user: User, passwd: string): Observable<any> {
-    
-    return this.tripDataService.login(user, passwd)
+  public login(user: User): Promise<any> {
+    return this.tripDataService.login(user)
       .then((authResp: AuthResponse) =>
     this.saveToken(authResp.token));
   }
 
-  public register(user: User, passwd: string): Observable<any> {
-    return this.tripDataService.register(user, passwd)
+  public register(user: User): Promise<any> {
+    return this.tripDataService.register(user)
       .then((authResp: AuthResponse) => 
       this.saveToken(authResp.token));
   }
@@ -51,13 +50,12 @@ export class AuthenticationService {
     }
   }
 
-  public getCurrentUser(): User {
-    if (this.isLoggedIn()) {
-      const token: string = this.getToken();
-      const { email, name } = 
-    JSON.parse(atob(token.split('.')[1]));
-      return { email, name } as User;
-    }
-  }
-
+  // public getCurrentUser(): User {
+  //   if (this.isLoggedIn()) {
+  //     const token: string = this.getToken();
+  //     const { email, name } = 
+  //       JSON.parse(atob(token.split('.')[1]));
+  //     return { email, name } as User;
+  //   }
+  // }
 }

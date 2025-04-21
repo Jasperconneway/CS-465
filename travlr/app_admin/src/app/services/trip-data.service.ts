@@ -16,48 +16,54 @@ export class TripDataService {
 
   constructor(private http: HttpClient,
     @Inject(BROWSER_STORAGE) private storage: Storage) {}
-  url = 'http://localhost:3000/api/trips';
-  baseUrl = 'http://localhost:3000/api/';
+
+  apiBaseUrl = 'http://localhost:3000/api/';
+  tripUrl = `${this.apiBaseUrl}trips`;
+
 
   getTrips() : Observable<Trip[]> {
     // console.log('Inside TripDataService::getTrips');
-    return this.http.get<Trip[]>(this.url);
+    return this.http.get<Trip[]>(this.tripUrl);
   }
 
   addTrip(formData: Trip) : Observable<Trip> {
         // console.log('Inside TripDataService::addTrips');
-    return this.http.post<Trip>(this.url, formData);
+    return this.http.post<Trip>(this.tripUrl, formData);
   }
 
   getTrip(tripCode: string) : Observable<Trip[]> {
     // console.log('Inside TripDataService::getTrips');
-    return this.http.get<Trip[]>(this.url + '/' + tripCode);
+    return this.http.get<Trip[]>(this.tripUrl + '/' + tripCode);
   }
 
   updateTrip(formData: Trip) : Observable<Trip> {
     // console.log('Inside TripDataService::addTrips');
-    return this.http.put<Trip>(this.url + '/' + formData.code, formData);
+    return this.http.put<Trip>(this.tripUrl + '/' + formData.code, formData);
   }
 
   // Call to our /login endpoint, returns JWT
-  login(user: User, passwd: string) : Observable<AuthResponse> {
+  login(user: User) : Promise<AuthResponse> {
     // console.log('Inside TripDataService::login');
-    return this.handleAuthAPICall('login', user, passwd);
+    return this.handleAuthAPICall('login', user);
   }
 
-  register(user: User, passwd: string) : Observable<AuthResponse> {
+  register(user: User) : Promise<AuthResponse> {
     // console.log('Inside TripDataService::register');
-    return this.handleAuthAPICall('register', user, passwd);
+    return this.handleAuthAPICall('register', user);
   }
 
-  handleAuthAPICall(endpoint: string, user: User, passwd: string) : Observable<AuthResponse> {
+  handleError(error: any): Promise<any> {
+    console.error('Something has gone wrong', error);
+    return Promise.reject(error.message || error);
+  }
+  
+  handleAuthAPICall(urlPath: string, user: User) : Promise<AuthResponse> {
     // console.log('Inside TripDataService::handleAuthAPICall');
-    let formData = {
-      name: user.name,
-      email: user.email,
-      passsword: passwd
-    };
-
-    return this.http.post<AuthResponse>(this.baseUrl + '/' + endpoint, formData);
+    const url: string = `${this.apiBaseUrl}/${urlPath}`; 
+    return this.http 
+      .post(url, user) 
+      .toPromise() 
+      .then(response => response as AuthResponse) 
+      .catch(this.handleError); 
   }
 }
