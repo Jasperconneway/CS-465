@@ -11,6 +11,7 @@ For SPA, we used Angular to load a single HTML page. SPA uses client-side render
 is the initial load which takes longer to complete. The backend uses a NoSQL MongoDB database for many benefits. This allows for scalability, flexibility, performance, and availability. It is known to manage 
 large amounts of data and does not rely on schema.
 
+<br />
 
 **Functionality**
 
@@ -20,6 +21,7 @@ web application. This makes it more simple and flexible for JavaScript to easily
 There were instances in the full stack process where we refactored code to improve functionality and efficiencies. One such instance was when we refactored static HTML pages using Handlebars. Specifically, these 
 were the headers and footers of the web application which decreased the amount of repetitive code and condensed the file of code.
 
+<br />
 
 **Testing**
 
@@ -27,6 +29,7 @@ There were multiple cases throughout the full stack application project that tes
 web application. These error codes would inform us what went wrong, and any log message told us how or where within the code it went wrong. Endpoints define URL structures that a client will use to access the 
 API. These endpoints use GET, POST, PUT, and DELETE methods. Security is important because each user must be authenticated before allowing them access to unauthorized information within the web application. 
 
+<br />
 
 **Reflection**
 
